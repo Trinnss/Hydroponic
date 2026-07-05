@@ -28,10 +28,10 @@ void drawPage1(U8G2_SH1106_128X64_NONAME_F_HW_I2C &display, float airTemp)
     display.drawBox(13, 48 - fill, 3, fill);
 
     // Progress bar
-    int width = map((int)airTemp, 0, 50, 0, 100);
+  /*  int width = map((int)airTemp, 0, 50, 0, 100);
 
     display.drawFrame(14, 54, 100, 7);
-    display.drawBox(15, 55, width, 5);
+    display.drawBox(15, 55, width, 5);*/
 
 }
 

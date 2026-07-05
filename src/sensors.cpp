@@ -35,7 +35,7 @@ void readSensors()
     ds18b20.requestTemperatures();
     waterTemp = ds18b20.getTempCByIndex(0);
 
-    humidity = dht.readHumidity();
+    //humidity = dht.readHumidity();
     airTemp = dht.readTemperature();
 
     // TODO:
@@ -44,7 +44,7 @@ void readSensors()
 
 bool isDHTOk()
 {
-    return !(isnan(airTemp) || isnan(humidity));
+    return !(isnan(airTemp) );
 }
 
 bool isWaterTempOk()
