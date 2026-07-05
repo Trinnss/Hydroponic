@@ -5,9 +5,9 @@
 
 // Function prototype
 void drawPage2(U8G2_SH1106_128X64_NONAME_F_HW_I2C &display, float waterTemp);
-void drawPage1(U8G2_SH1106_128X64_NONAME_F_HW_I2C &display, float airTemperature);
-void drawPage3(U8G2_SH1106_128X64_NONAME_F_HW_I2C &display, int waterLevel);
-void drawDashboard(U8G2_SH1106_128X64_NONAME_F_HW_I2C &display, float airTemp, float waterTemp, int waterLevel);
+void drawPage1(U8G2_SH1106_128X64_NONAME_F_HW_I2C &display, float airTemperature, float humidity);
+void drawPage3(U8G2_SH1106_128X64_NONAME_F_HW_I2C &display, float waterLevel);
+void drawDashboard(U8G2_SH1106_128X64_NONAME_F_HW_I2C &display, float airTemp, float humidity, float waterTemp, float waterLevel);
 
 
 #endif

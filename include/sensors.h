@@ -4,7 +4,7 @@
 extern float airTemp;
 extern float humidity;
 extern float waterTemp;
-extern int waterLevel;
+extern float waterLevel;
 
 void initSensors();
 void readSensors();

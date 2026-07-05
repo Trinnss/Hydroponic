@@ -32,7 +32,7 @@ void updateDisplay()
     case 1:
 
         if (isDHTOk())
-            drawPage1(display, airTemp);
+            drawPage1(display, airTemp, humidity);
         else
             drawSensorError(display, "DHT22");
 
@@ -56,6 +56,7 @@ void updateDisplay()
 
         drawDashboard(display,
                       airTemp,
+                      humidity,
                       waterTemp,
                       waterLevel);
 

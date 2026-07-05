@@ -27,5 +27,12 @@ void loop()
 {
     handleButton();
     readSensors();
-    updateDisplay();
+
+    static uint32_t lastUpdate = 0;
+
+    if (millis() - lastUpdate >= 33)   // ~30 FPS
+    {
+        lastUpdate = millis();
+        updateDisplay();
+    }
 }

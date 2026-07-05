@@ -15,7 +15,7 @@ DHT dht(DHTPIN, DHTTYPE);
 float airTemp = NAN;
 float humidity = NAN;
 float waterTemp = DEVICE_DISCONNECTED_C;
-int waterLevel = 73;
+float waterLevel = 73.22;
 
 static unsigned long lastRead = 0;
 
@@ -35,7 +35,7 @@ void readSensors()
     ds18b20.requestTemperatures();
     waterTemp = ds18b20.getTempCByIndex(0);
 
-    //humidity = dht.readHumidity();
+    humidity = dht.readHumidity();
     airTemp = dht.readTemperature();
 
     // TODO:
@@ -44,7 +44,7 @@ void readSensors()
 
 bool isDHTOk()
 {
-    return !(isnan(airTemp) );
+    return !(isnan(airTemp) || isnan(humidity));
 }
 
 bool isWaterTempOk()
