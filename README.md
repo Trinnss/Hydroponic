@@ -1,28 +1,28 @@
-# Hydroponic Monitor 🌱
+# Hydroponic Monitor
 
-Hydroponic Monitor is an ESP32-C3 firmware project built with PlatformIO. It drives a 128x64 SH1106 OLED and cycles through several sensor pages for a small hydroponic setup. The firmware currently reads air temperature and humidity from a DHT22, water temperature from a DS18B20, and a placeholder water level value that is ready to be replaced with a real analog or digital sensor input.
+Hydroponic Monitor is an ESP32-C3 firmware project built with PlatformIO. It drives a 128x64 SH1106 OLED and cycles through four sensor pages for a small hydroponic setup.
 
-## Overview 🔎
+## What It Does
 
-The firmware boots the display, configures I2C, initializes the sensors, and then enters a simple loop:
+The firmware boots the display, configures I2C, initializes the sensors, and then runs a tight loop:
 
-1. Read the page button with debounce logic.
+1. Read the page button with 50 ms debounce logic.
 2. Sample the sensors once per second.
-3. Render the active screen on the OLED.
+3. Redraw the active screen at about 30 FPS.
 
-The display uses U8g2 for all drawing, and the layout is split into separate page functions so each screen can evolve independently.
+The display uses U8g2 for all drawing, and each page is implemented as a separate function so the layouts can evolve independently.
 
-## Features ✨
+## Features
 
-- 📟 128x64 SH1106 OLED interface
-- 🔁 Four display pages with a button-controlled page index
-- 🔘 Debounced input on the page button
-- 🌡️ DHT22 support for air temperature and humidity
-- 💧 DS18B20 support for water temperature
-- 📊 Combined dashboard page for a quick system overview
-- ⚠️ Error screens when a sensor is missing or disconnected
+- 128x64 SH1106 OLED interface
+- Four pages with a button-controlled page index
+- Debounced input on the page button
+- DHT22 support for air temperature and humidity
+- DS18B20 support for water temperature
+- Dashboard page for a quick system overview
+- Sensor error screens when a device is missing or disconnected
 
-## Hardware 🧰
+## Hardware
 
 Target board:
 
@@ -40,13 +40,13 @@ Inputs and sensors:
 - I2C SDA on GPIO 8
 - I2C SCL on GPIO 9
 
-## Wiring Notes 🧩
+## Wiring Notes
 
 - The button uses `INPUT_PULLUP`, so it should be wired to pull the pin low when pressed.
 - The DHT22 and DS18B20 need proper pull-up resistors as required by their modules or breakout boards.
-- The OLED uses the hardware I2C bus configured in `main.cpp`.
+- The OLED uses the hardware I2C bus configured in `src/main.cpp`.
 
-## Display Pages 🖥️
+## Display Pages
 
 The OLED cycles through four pages:
 
@@ -55,9 +55,9 @@ The OLED cycles through four pages:
 3. Water level page
 4. Dashboard page
 
-Each page uses a different visual layout, including large numeric readouts, bars, and simple status text. If the DHT22 or DS18B20 is not detected, the matching page shows a sensor error message instead of live data.
+Each page uses a different layout, including large numeric readouts, bars, and status text. If the DHT22 or DS18B20 is not detected, the matching page shows a sensor error message instead of live data.
 
-## Software Behavior ⚙️
+## Software Behavior
 
 ### Button Handling
 
@@ -65,20 +65,20 @@ Each page uses a different visual layout, including large numeric readouts, bars
 
 ### Sensor Reading
 
-`src/sensors.cpp` reads the sensors once per second to avoid unnecessary polling. The DHT22 updates `airTemp` and `humidity`, while the DS18B20 updates `waterTemp`.
+`src/sensors.cpp` reads the sensors once per second to avoid unnecessary polling. The DHT22 updates `airTemp` and `humidity`, while the DS18B20 updates `waterTemp`. The water level value is currently a fixed placeholder at `73.22`.
 
 ### Rendering
 
-`src/display.cpp` decides which page to draw and calls the matching function from `src/pages.cpp`. It also draws the small page indicator dots at the bottom of the screen.
+`src/display.cpp` decides which page to draw and calls the matching function from `src/pages.cpp`. It also draws the page indicator dots at the bottom of the screen.
 
-## Current Status 📌
+## Current Status
 
 - Air temperature and humidity are read from the DHT22
 - Water temperature is read from the DS18B20
-- Water level is still a fixed placeholder value in `sensors.cpp`
-- Serial logging is currently disabled in `main.cpp`
+- Water level is still a placeholder value in `src/sensors.cpp`
+- Serial logging is commented out in `src/main.cpp`
 
-## Build And Upload 🚀
+## Build And Upload
 
 This project uses PlatformIO.
 
@@ -90,7 +90,7 @@ pio device monitor
 
 If you are using VS Code, you can also use the PlatformIO sidebar to build, upload, and open the serial monitor.
 
-## Project Layout 🗂️
+## Project Layout
 
 - `src/main.cpp` initializes I2C, the display, the button, and the sensors
 - `src/button.cpp` handles button debounce and page switching
@@ -100,7 +100,7 @@ If you are using VS Code, you can also use the PlatformIO sidebar to build, uplo
 - `include/*.h` contains the shared interfaces used across the firmware
 - `platformio.ini` defines the ESP32-C3 build configuration and libraries
 
-## Dependencies 📦
+## Dependencies
 
 Managed through `platformio.ini`:
 
@@ -109,7 +109,7 @@ Managed through `platformio.ini`:
 - DallasTemperature
 - Adafruit DHT sensor library
 
-## Extending The Project 🛠️
+## Extending The Project
 
 Common next steps for this firmware are:
 
@@ -119,13 +119,13 @@ Common next steps for this firmware are:
 - Add alarm thresholds for temperature or low water level
 - Add a fifth page for pump, fan, or nutrient status
 
-## Troubleshooting 🧪
+## Troubleshooting
 
 - If the display stays blank, check the I2C wiring and confirm the OLED address and model.
 - If the DHT22 page shows an error, verify the pin assignment, power, and pull-up requirements.
 - If the DS18B20 reads as disconnected, check the one-wire data line and pull-up resistor.
 - If the button skips pages, confirm the wiring to GPIO 3 and the debounce timing.
 
-## Notes 📝
+## Notes
 
 - The project already includes `.gitignore` entries for PlatformIO build output.
